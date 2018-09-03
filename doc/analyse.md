@@ -28,7 +28,19 @@ Servo Motor verbonden met de Arduino UNO op 5V, past zijn eigen aan a.h.v.d. de 
 2 LEDs verbonden met de Arduino UNO, met weerstanden van 330 Ohm.  
 ## Software analyse
 ![Software Analyse](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/Software%20Analyse.png)  
-
+Sensoren voor X en Y positie gebruiken de New Ping library om de juiste afstanden te bepalen tov de muur.  
+Deze coördinaten worden elke loop vergeleken met de gewenste coördinaten om te zien of het correct is.  
+Als dit correct is zal de groene LED aanspringen, is dit niet het geval blijft de rode LED branden tot het correct is.  
+//TODO Kalibratie  
+De servo motor zal zijn eigen constant aanpassen a.d.h.v. de heading van de 9DOF stick.  
+Voor de Android applicatie hebben we eerst de optie knoppen.  
+Device Selection: Openen van een dialog box met alle gepairde devices.  
+Connect: Maken van een Bluetooth Socket verbinding met de opstelling.  
+Calibratie: Kalibratie van de 9DOF stick starten.  
+Dan hebben we Lengte en Breedte editText boxen, hiermee gaan we de grootte meegeven van de bak.  
+Als laatste hebben we de X/Y waardes waarmee we de afstand kunnen raden.  
+Data transmission: we translaten alles wat we moeten doorsturen naar bytes, deze gaan dan via de Bluetooth socket naar de opstelling.  
+Daar worden de bytes aan elkaar geplakt.  
 ## Task list
 
 1.  Opbouwen breadboard / Connecteren
