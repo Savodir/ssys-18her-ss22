@@ -101,8 +101,8 @@ if (Serial.available() > 0)
   //CalibrationChar, tijdelijke testchar
     recalibrate();
     break;
-   default:
-   receivedData = receivedData + inbyte;
+  case 'r':
+    receivedData = receivedData + inbyte;
     xval = getValue(receivedData, ',', 0);
     yvaltemp = getValue(receivedData, ',', 1);
     yval = yvaltemp.substring(0,yvaltemp.length()-1);
@@ -111,12 +111,15 @@ if (Serial.available() > 0)
     Serial.println("Y:" + yval);
     x = xval.toInt();
     y = yval.toInt();
-      receivedData = "";
-      xval = "";
-      yval = "";
-      yvaltemp = "";
+    receivedData = "";
+    xval = "";
+    yval = "";
+    yvaltemp = "";
+    inbyte = "a";
       }
-   break;
+    break;
+   case 'g':
+    
   }
  }
 }
