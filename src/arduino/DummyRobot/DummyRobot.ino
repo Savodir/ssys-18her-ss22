@@ -182,7 +182,6 @@ void recalibrate() {
   }
 
   drift = tempDrift/10;
-  
   //And normalize distance sensor readings
   currentHeading = 0;
 }

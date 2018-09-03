@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ConnectedThread mConnectedThread;
     TextView txtGuessed;
     EditText editX, editY;
-    Button btnDevSelect, btnConnect, btnCalibrate, btnGuess;
+    Button btnDevSelect, btnConnect, btnCalibrate, btnGuess, btnReset;
     Boolean startData = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         btnCalibrate.setEnabled(false);
         btnGuess = findViewById(R.id.btn_guess);
         btnGuess.setEnabled(false);
+        btnReset.findViewById(R.id.btn_reset);
+        btnReset.setEnabled(false);
         ButtonSetup();
         bluetooth();
     }
@@ -137,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mConnectedThread.write("x");
                 btnGuess.setEnabled(true);
+                btnReset.setEnabled(true);
             }
         });
         btnGuess.setOnClickListener(new View.OnClickListener() {
@@ -151,6 +154,12 @@ public class MainActivity extends AppCompatActivity {
                     mConnectedThread.write(txtX + "," + txtY);
                     mConnectedThread.write("z");
                 }
+            }
+        });
+        btnReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mConnectedThread.write(" y'");
             }
         });
     }

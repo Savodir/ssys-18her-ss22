@@ -23,21 +23,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Select Device" />
+                android:text="Select Device"
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/btn_connect"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Connect" />
+                android:text="Connect"
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/btn_calibrate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Calibrate" />
+                android:text="Calibrate"
+                android:textSize="13sp" />
+
+            <Button
+                android:id="@+id/btn_reset"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Reset"
+                android:textSize="13sp" />
 
         </LinearLayout>
 
