@@ -11,8 +11,6 @@ NewPing sensor2(5, 4, 300);
 String xval = "";
 String yval = "";
 String yvaltemp = "";
-//If currentpos < 180 == 0 + (currentheading / 2)
-//Else 360 - (CURRENTHEADING / 2) = Pos
 int x = 0; 
 int y = 0;
 float distance1 = 0, distance2 = 0;
@@ -83,6 +81,9 @@ void loop() {
     digitalWrite(ledWrong, LOW);
     digitalWrite(ledRight, HIGH);
     } 
+    //If currentpos < 180 == 0 + (currentheading / 2)
+//Else 360 - (CURRENTHEADING / 2) = Pos
+     myservo.write(currentHeading / 2);                  // sets the servo position according to the scaled value
 if (Serial.available() > 0)
   {
     inbyte = Serial.read();
