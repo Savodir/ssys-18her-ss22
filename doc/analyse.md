@@ -89,5 +89,37 @@ Als dit wel het geval zou zijn en de groene LED aangaat, kan je dit resetten doo
 ## Andere mogelijke oplossingen 
 In plaats van afmetingen van de bak mee te geven zouden we ook de sensoren de afstand kunnen laten meten, maar dit is minder accuraat.  
 ## PCB
+### Woord vooraf
+- Geen PCB Design als keuzevak
+- Geen toegang tot cursus
+- Samenwerking met Elke Reynard
+### Schema
+![Schema](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/PCB%20schema.png)  
+### PCB
+Voeding van 5V aansluiten.  
+Alle aansluitingen op externe componenten staan aan de kant van de PCB zoals het moet.  
+Plaats voorzien om ATmega chip gemakkelijk in/uit het voetje te ha;en.  
+UART aansluiten = Voeding loskoppelen. 
+![PCB](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/Presentatie/PCB.png)  
+### 3D
+![3D Boven](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/Presentatie/PCB%20boven.png)  
+![3D Onder](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/Presentatie/PCB%20onder.png)  
 
+### Problemen
+1. Kristal moet uitgesneden worden op bepaalde PCB printers.  
+2. Standaardbreedte van de baantjes verhoogd.  
+3. Diameter van de pads moet groter gemaakt worden om goed te kunnen solderen.  
 ## Conclusie
+
+### Ervaring
+
+- Goed individueel project
+- Leren solderen
+- Meer ervaring met Arduino
+
+### Wat kon beter
+
+- Gebruik maken van registers
+- Knutselwerk opstelling
+- Solo PCB Design
+- Code verbeteren
