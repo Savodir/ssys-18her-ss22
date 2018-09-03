@@ -19,8 +19,15 @@ De opstelling gaat daarna zijn huidig coördinatenpaar vergelijken met de gewens
 Als er een match is dan gaat er een LED branden.
 
 ## Hardware analyse
-
+![Hardware Analyse](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/Hardware%20Analyse.png)  
+Bluetooth verbinding tussen opstelling en Android device via een HC-06 op 5V.  
+2 Ultrasone sensoren verbonden met de Arduino UNO op 5V.  
+9DOF Stick verbonden met de Arduino UNO op 3.3V.  
+Geeft de heading terug door gebruik te maken van de gyroscoop.  
+Servo Motor verbonden met de Arduino UNO op 5V, past zijn eigen aan a.h.v.d. de gegeven heading.  
+2 LEDs verbonden met de Arduino UNO, met weerstanden van 330 Ohm.  
 ## Software analyse
+![Software Analyse](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/Software%20Analyse.png)  
 
 ## Task list
 
