@@ -13,21 +13,22 @@ String yval = "";
 String yvaltemp = "";
 int x = 0; 
 int y = 0;
+int l = 0;
+int b = 0;
+int xcoord;
+int ycoord;
 float distance1 = 0, distance2 = 0;
-int corner;
-int pos = 0;
 int currentHeading;
-int sensorX = 230;
-int sensorY = 256;
+int sensorX;
+int sensorY;
+int servopos = 0;
 double drift;
-int wrongvalue = 5;
-bool commandGiven = false;
+int wrongvalue = 25;
 long currentMillis;
 long prevMillis;
 double pastTime;
 int ledWrong = 12;
 int ledRight = 11;
-
 char inbyte = "";
 Servo myservo;
 String receivedData;
@@ -47,18 +48,14 @@ void setup() {
   pinMode(ledRight, OUTPUT);
   digitalWrite(ledWrong, HIGH);
   digitalWrite(ledRight, LOW);
-  corner = 0;
-  drift = 1.40;
   imu.settings.device.commInterface = IMU_MODE_I2C;
   imu.settings.device.mAddress = LSM9DS1_M;
   imu.settings.device.agAddress = LSM9DS1_AG;
-
-  drift = 1.40;
+  drift = 1.5;
   currentHeading = 0;
   currentMillis = 0;
   prevMillis = 0;
   pastTime = 0;
-
   if (!imu.begin())
   {
     Serial.println("Failed to communicate with LSM9DS1.");
@@ -76,21 +73,13 @@ void loop() {
   // put your main code here, to run repeatedly:
   readDistance();
   readSensors();
-  delay(100);
-  if(sensorX >= x - wrongvalue && sensorY >= y - wrongvalue && sensorX <= x + wrongvalue && sensorY <= y + wrongvalue) {
-    digitalWrite(ledWrong, LOW);
-    digitalWrite(ledRight, HIGH);
-    } 
-    //If currentpos < 180 == 0 + (currentheading / 2)
-//Else 360 - (CURRENTHEADING / 2) = Pos
-     myservo.write(currentHeading / 2);                  // sets the servo position according to the scaled value
+  delay(200);
+  calcXY();
+  myservo.write(servopos);                  // sets the servo position according to the scaled value
 if (Serial.available() > 0)
   {
     inbyte = Serial.read();
     switch (inbyte) {
-  case 'a':
-    commandGiven = true;
-    break;
   case 'b':
     xval = getValue(receivedData, ',', 0);
     yval = getValue(receivedData, ',', 1);
@@ -102,7 +91,11 @@ if (Serial.available() > 0)
   //CalibrationChar, tijdelijke testchar
     recalibrate();
     break;
-  case 'r':
+  case 'y':
+    digitalWrite(ledWrong, HIGH);
+    digitalWrite(ledRight, LOW);
+    break;
+  default:
     receivedData = receivedData + inbyte;
     xval = getValue(receivedData, ',', 0);
     yvaltemp = getValue(receivedData, ',', 1);
@@ -116,25 +109,30 @@ if (Serial.available() > 0)
     xval = "";
     yval = "";
     yvaltemp = "";
-    inbyte = "a";
+    inbyte = 'a';
+    if(xcoord >= x - wrongvalue && ycoord >= y - wrongvalue && xcoord <= x + wrongvalue && ycoord <= y + wrongvalue) {
+    digitalWrite(ledWrong, LOW);
+    digitalWrite(ledRight, HIGH);
+       }
+    x = 9999999;
+    y = 9999999;
       }
     break;
-   case 'g':
-    
+    }
   }
  }
-}
 void readDistance() {
   //Reads all sensor distances
   double tempdistance1 = sensor1.ping_cm();//(duration1*0.034/2)/distanceError;
   delay(50);
   double tempdistance2 = sensor2.ping_cm();//(duration2*0.034/2)/distanceError;
-
   if(tempdistance1 > 0.20){
     distance1 = tempdistance1;
+    sensorX = distance1;
   }
   if(tempdistance2 > 0.20){
     distance2 = tempdistance2;
+    sensorY = distance2;
   }
   Serial.print("Distance1= ");
   Serial.println(distance1);
@@ -154,19 +152,18 @@ void readSensors() {
   currentMillis = millis();
 
   pastTime = (currentMillis - prevMillis) * 0.001;
-  if((imu.calcGyro(imu.gz)- drift) > 0.5 || (imu.calcGyro(imu.gz)- drift) < -0.5)
+  if((imu.calcGyro(imu.gz)- drift) > 0.25 || (imu.calcGyro(imu.gz)- drift) < -0.25)
   {
-    currentHeading += (imu.calcGyro(imu.gz) - drift) * pastTime * 2; 
+    currentHeading += (imu.calcGyro(imu.gz) - drift) * pastTime; 
   }
   if(currentHeading < 0){
     currentHeading = currentHeading + 360;
-  }
+  } 
   if(currentHeading >= 360){
     currentHeading = currentHeading - 360;
-  }
+  } 
   prevMillis = currentMillis;
     Serial.println(currentHeading);
-
 }
 void recalibrate() {
   //Calibrates the sensors
@@ -188,6 +185,21 @@ void recalibrate() {
   drift = tempDrift/10;
   //And normalize distance sensor readings
   currentHeading = 0;
+  myservo.write(0);
+  delay(2000);
+  int ltemp = 0;
+  int btemp = 0;
+  readDistance();
+  ltemp = ltemp + distance1;
+  btemp = btemp + distance2;
+  myservo.write(180);
+  delay(2000);
+  readDistance();
+  ltemp = ltemp + distance1;
+  btemp = btemp + distance2;
+  Serial.println("Lengte: " + String(ltemp) + " Breedte: " + String(btemp));
+  b = btemp;
+  l = ltemp;
 }
 
   
@@ -205,5 +217,18 @@ String getValue(String data, char separator, int index)
         }
     }
     return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
+}
+void calcXY() {
+  if(currentHeading < 180) {
+    xcoord = sensorX;
+    ycoord = sensorY;
+    servopos = currentHeading;
+    }
+  else {
+    xcoord = l - sensorX;
+    ycoord = b - sensorY;
+    servopos = currentHeading - 180;
+    Serial.println("Xcoord: " + String(xcoord) + "ycoord: " + String(ycoord));
+    }
 }
 
