@@ -1,8 +1,5 @@
 # Analyse
 
-## Mindmap
-
-
 ## Beschrijving
 
 Herexamen Smart Systems 2017-2018 aan de AP Hogeschool voor de richting Elektronica-ICT.  
@@ -31,13 +28,14 @@ Servo Motor verbonden met de Arduino UNO op 5V, past zijn eigen aan a.h.v.d. de 
 Sensoren voor X en Y positie gebruiken de New Ping library om de juiste afstanden te bepalen tov de muur.  
 Deze coördinaten worden elke loop vergeleken met de gewenste coördinaten om te zien of het correct is.  
 Als dit correct is zal de groene LED aanspringen, is dit niet het geval blijft de rode LED branden tot het correct is.  
-//TODO Kalibratie  
 De servo motor zal zijn eigen constant aanpassen a.d.h.v. de heading van de 9DOF stick.  
+### Android Applicatie
+![Android App](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/Presentatie/Android%20App.png)  
 Voor de Android applicatie hebben we eerst de optie knoppen.  
 Device Selection: Openen van een dialog box met alle gepairde devices.  
 Connect: Maken van een Bluetooth Socket verbinding met de opstelling.  
 Calibratie: Kalibratie van de 9DOF stick starten.  
-Dan hebben we Lengte en Breedte editText boxen, hiermee gaan we de grootte meegeven van de bak.  
+Reset: Resetten van de LED lichtjes.  
 Als laatste hebben we de X/Y waardes waarmee we de afstand kunnen raden.  
 Data transmission: we translaten alles wat we moeten doorsturen naar bytes, deze gaan dan via de Bluetooth socket naar de opstelling.  
 Daar worden de bytes aan elkaar geplakt.  
@@ -76,23 +74,21 @@ In elkaar gehouden door combinatie van secondelijm en plakbank
 Twee sensoren op kleinere breadboards die gemonteerd zijn op de servo motor.  
 Via een Bluetooth Socket verbinding te maken door gebruik te maken van een Android Smartphone kunnen we een connectie verkrijgen met de opstelling.  
 Opstelling plaatsen zodat de sensoren loodrecht uitlijnen met de bak, daarna zullen we onze 9DOF stick kalibreren door een knop op de smartphone.  
-//TODO kalibratie  
+Hierna zal de servo motor op zijn beginpositie blijvens staan voor twee seconden zodat de sensoren de afstand kunnen meten.  
+Daarna zal de servo motor 180 graden draaien en zullen de sensoren opnieuw meten.  
+Deze twee afstanden tellen we bij elkaar op om de grootte van de bak te kennen.  
 Na dit gebeurd is kunnen we de opstelling plaatsen in de bak en zal de servo motor reageren op de gyroscoop van de 9DOF stick.  
 Als we tussen 0-180 zitten zullen de sensoren gericht staan op de muren waar we ze eerst op hebben gericht.  
 Tussen 180-360 zal de servo motor draaien zodat de sensoren zich richten op de andere muren.  
-Via onze smartphone geven we de afmeting mee van de bak, zodat het resultaat dat gemeten is meer accuraat is.  
 Daarna kunnen we een X en Y positie meegeven met een Guess knop.   
 Als de gewenste locatie overeenkomt (10cm error margin) met het huidig coördinatenpaar zal de groene LED aangaan.  
 Als dit niet het geval is, kan je opnieuw blijven proberen.  
 Als dit wel het geval zou zijn en de groene LED aangaat, kan je dit resetten door gebruik te maken van de reset knop en opnieuw proberen/spelen.
 
 ## Andere mogelijke oplossingen 
-In plaats van afmetingen van de bak mee te geven zouden we ook de sensoren de afstand kunnen laten meten, maar dit is minder accuraat.  
+Afmeting van de bak meegeven via Bluetooth voor meer accurate metingen.  
 ## PCB
-### Woord vooraf
-- Geen PCB Design als keuzevak
-- Geen toegang tot cursus
-- Samenwerking met Elke Reynard
+
 ### Schema
 ![Schema](https://raw.githubusercontent.com/Savodir/ssys-18her-ss22/master/doc/img/PCB%20schema.png)  
 ### PCB
@@ -111,15 +107,20 @@ UART aansluiten = Voeding loskoppelen.
 3. Diameter van de pads moet groter gemaakt worden om goed te kunnen solderen.  
 ## Conclusie
 
+### Zwaktes / Mogelijke verbeteringen
+
+1.  Gyroscoop van de 9DOF stick is niet accuraat genoeg.
+2.  Opbouwen van de opstelling kon beter.
+3.  Slecht onderzoek naar PCB design.
+4.  Ultrasone sensoren zouden beter moeten meten.
+5.  Geen gebruik gemaakt van registers
+6.  NewPing library overbodig?
+
 ### Ervaring
+1.  Goed invidueel project.
+2.  Met wat zwaktes, een werkend project.
+3.  Succesvolle planning.
+4.  Meer ervaring met Arduino.
 
-- Goed individueel project
-- Leren solderen
-- Meer ervaring met Arduino
 
-### Wat kon beter
 
-- Gebruik maken van registers
-- Knutselwerk opstelling
-- Solo PCB Design
-- Code verbeteren
