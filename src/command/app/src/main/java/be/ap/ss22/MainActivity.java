@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private StringBuilder recDataString = new StringBuilder();
     private static final UUID BTMODULEUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     private ConnectedThread mConnectedThread;
-    EditText editX, editY, editL, editB;
-    Button btnDevSelect, btnConnect, btnCalibrate, btnGuess, btnReset, btnSize;
+    EditText editX, editY;
+    Button btnDevSelect, btnConnect, btnCalibrate, btnGuess, btnReset;
     Boolean startData = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         editX = findViewById(R.id.edit_X);
         editY = findViewById(R.id.edit_Y);
-        editB = findViewById(R.id.edit_B);
-        editL = findViewById(R.id.edit_Y);
         btnDevSelect = findViewById(R.id.btn_deviceselector);
         btnConnect = findViewById(R.id.btn_connect);
         btnConnect.setEnabled(false);
@@ -56,10 +54,8 @@ public class MainActivity extends AppCompatActivity {
         btnCalibrate.setEnabled(false);
         btnGuess = findViewById(R.id.btn_guess);
         btnGuess.setEnabled(false);
-        btnReset.findViewById(R.id.btn_reset);
+        btnReset = findViewById(R.id.btn_reset);
         btnReset.setEnabled(false);
-        btnSize.findViewById(R.id.btn_Size);
-        btnSize.setEnabled(false);
         ButtonSetup();
         bluetooth();
     }
@@ -130,11 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 mConnectedThread = new ConnectedThread(btSocket, bluetoothIn, MainActivity.this);
                 mConnectedThread.start();
                 if(!startData) {
-                    mConnectedThread.write("s");
                     startData = true;
                 }
                 btnCalibrate.setEnabled(true);
-                btnSize.setEnabled(true);
             }
         });
         btnCalibrate.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         btnGuess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mConnectedThread.write("r");
                 String txtX = editX.getText().toString();
                 String txtY = editY.getText().toString();
                 if(txtX == "" || txtY == "") {
@@ -160,25 +153,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        btnSize.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mConnectedThread.write("g");
-                String txtL = editL.getText().toString();
-                String txtB = editB.getText().toString();
-                if(txtL == "" || txtB == "") {
-                    Toast.makeText(getBaseContext(), "Please fill in values", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    mConnectedThread.write(txtL + "," + txtB);
-                    mConnectedThread.write("u");
-                }
-            }
-        });
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mConnectedThread.write(" y'");
+                mConnectedThread.write("y'");
             }
         });
     }
